@@ -1,0 +1,60 @@
+{
+    "name": "digitalygo/laravel-action-request",
+    "description": "Laravel package to generate Actions, Form Requests, and Pest tests with a single command",
+    "type": "library",
+    "license": "MIT",
+    "version": "1.0.0",
+    "keywords": ["laravel", "actions", "form-request", "pest", "generator", "laravel-action-request"],
+    "authors": [
+        {
+            "name": "Lorenzo Camporesi",
+            "email": "lorenzo.camporesi@digitalygo.it",
+            "homepage": "https://digitalygo.it/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "laravel/framework": "^12.0",
+        "lorisleiva/laravel-actions": "^2.9",
+        "laravel/boost": "^2.1"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10",
+        "pestphp/pest": "^4.2",
+        "laravel/pint": "^1.24",
+        "jasonmccreary/laravel-test-assertions": "^2.8",
+        "fakerphp/faker": "^1.23",
+        "brianium/paratest": "^7.16"
+    },
+    "autoload": {
+        "psr-4": {
+            "Digitalygo\\ActionRequest\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Digitalygo\\ActionRequest\\Tests\\": "tests/",
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Digitalygo\\ActionRequest\\ActionRequestServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "pest",
+        "pint": "pint"
+    }
+}

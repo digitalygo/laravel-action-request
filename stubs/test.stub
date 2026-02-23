@@ -1,0 +1,57 @@
+<?php
+
+declare(strict_types=1);
+
+use {{ actionNamespace }}\{{ actionClass }};
+use {{ requestNamespace }}\{{ requestClass }};
+
+beforeEach(function (): void {
+    // TODO: Setup test prerequisites
+});
+
+describe('{{ actionName }} {{ model }}', function (): void {
+    it('successfully executes the action with valid data', function (array $data): void {
+        $action = new {{ actionClass }}();
+        $result = $action->handle($data);
+
+        expect($result)->toBeArray();
+        // TODO: Add assertions for successful execution
+    })->with('validData');
+
+    it('returns validation errors with invalid data', function (array $data, array $expectedErrors): void {
+        $request = new {{ requestClass }}();
+        $request->merge($data);
+
+        // Validation is expected to fail
+        expect(fn () => $request->validateResolved())
+            ->toThrow(\Illuminate\Validation\ValidationException::class);
+    })->with('invalidData');
+});
+
+dataset('validData', function (): array {
+    return [
+        'minimal valid data' => [
+            // TODO: Define valid data sets
+            ['name' => 'Test {{ model }}'],
+        ],
+        'full valid data' => [
+            // TODO: Define complete valid data sets
+            ['name' => 'Test {{ model }}', 'description' => 'A test description'],
+        ],
+    ];
+});
+
+dataset('invalidData', function (): array {
+    return [
+        'missing required fields' => [
+            // TODO: Define invalid data sets
+            ['name' => ''],
+            ['name' => ['The name field is required.']],
+        ],
+        'invalid field types' => [
+            // TODO: Define type validation errors
+            ['name' => 123],
+            ['name' => ['The name must be a string.']],
+        ],
+    ];
+});

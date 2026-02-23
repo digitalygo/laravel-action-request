@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Http\JsonResponse;
+use Lorisleiva\Actions\Concerns\AsAction;
+use {{ requestNamespace }}\{{ requestClass }};
+
+/**
+ * Simple Endpoint - {{ actionName }} {{ model }}
+ * OpenAPI Operation
+ * operationId: {{ operationId }}
+ * path: {{ path }}
+ * method: POST
+ */
+final class {{ class }}
+{
+    use AsAction;
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function handle(array $data): array
+    {
+        // Minimal implementation
+        return $data;
+    }
+
+    public function asController({{ requestClassWithNamespace }} $request): JsonResponse
+    {
+        $result = $this->handle($request->validated());
+
+        return response()->json(['data' => $result]);
+    }
+}

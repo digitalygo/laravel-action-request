@@ -1,0 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Http\JsonResponse;
+{{ returnUse }}use Lorisleiva\Actions\Concerns\AsAction;
+use {{ requestNamespace }}\{{ requestClass }};
+
+/**
+ * OpenAPI Operation
+ * operationId: {{ operationId }}
+ * path: {{ path }}
+ * method: POST
+ */
+final class {{ class }}
+{
+    use AsAction;
+
+    {{ returnComment }}
+    public function handle(array $data): {{ returnType }}
+    {
+        // TODO: Implement action logic
+        // $data contains validated payload
+
+        return [];
+    }
+
+    public function asController({{ requestClassWithNamespace }} $request): JsonResponse
+    {
+        $result = $this->handle($request->validated());
+
+        return response()->json([
+            'data' => $result,
+            'message' => '{{ actionName }} operation completed successfully',
+        ]);
+    }
+}

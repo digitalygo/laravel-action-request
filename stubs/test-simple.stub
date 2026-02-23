@@ -1,0 +1,43 @@
+<?php
+
+declare(strict_types=1);
+
+use {{ actionNamespace }}\{{ actionClass }};
+use {{ requestNamespace }}\{{ requestClass }};
+
+beforeEach(function (): void {
+    // Minimal setup for simple endpoint
+});
+
+describe('{{ actionName }} {{ model }} - Simple Endpoint', function (): void {
+    it('returns success response with valid data', function (array $data): void {
+        $action = new {{ actionClass }}();
+        $result = $action->handle($data);
+
+        expect($result)->toBeArray()
+            ->and($result)->toHaveKey('name');
+    })->with('validData');
+
+    it('returns 422 for validation errors', function (array $data): void {
+        $request = new {{ requestClass }}();
+        $request->merge($data);
+
+        expect(fn () => $request->validateResolved())
+            ->toThrow(\Illuminate\Validation\ValidationException::class);
+    })->with('invalidData');
+});
+
+dataset('validData', function (): array {
+    return [
+        'valid name' => [['name' => 'Test {{ model }}']],
+        'valid with extra' => [['name' => 'Test {{ model }}', 'extra' => 'value']],
+    ];
+});
+
+dataset('invalidData', function (): array {
+    return [
+        'missing name' => [[]],
+        'empty name' => [['name' => '']],
+        'numeric name' => [['name' => 123]],
+    ];
+});
