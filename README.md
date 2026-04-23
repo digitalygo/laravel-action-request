@@ -6,6 +6,7 @@
 A Laravel package to generate Actions, Form Requests, and Pest tests with a
 single command. Built on top of
 [lorisleiva/laravel-actions](https://github.com/lorisleiva/laravel-actions).
+Supports Laravel 12 and 13.
 
 ## Installation
 
@@ -15,7 +16,8 @@ Install the package via Composer:
 composer require digitalygo/laravel-action-request
 ```
 
-The package will auto-register its service provider.
+Use in Laravel 12 or 13 apps. The package will auto-register its service
+provider.
 
 ## Usage
 
@@ -129,14 +131,15 @@ Use these as guidance for documenting your API endpoints.
 
 This package includes a Laravel Boost skill definition in `boost/skills.php`.
 It registers package commands and paths for enhanced IDE support.
-The skill is auto-discovered by Laravel Boost per the 12.x documentation.
+The skill is auto-discovered by Laravel Boost per the package documentation.
 
 ## Dependencies
 
 - PHP ^8.4
-- Laravel ^12.0
-- lorisleiva/laravel-actions ^2.9
-- laravel/boost ^2.1 (for skills support)
+- Laravel ^12.0 || ^13.0
+- lorisleiva/laravel-actions ^2.10.1
+- laravel/boost ^2.2.3 (for skills support)
+- orchestra/testbench ^10.0 || ^11.0
 
 ## Testing
 

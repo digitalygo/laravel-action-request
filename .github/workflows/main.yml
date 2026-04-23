@@ -2,32 +2,40 @@ name: run-tests
 
 on:
     push:
-        branches: [master]
+        branches: [main, alpha, beta]
     pull_request:
-        branches: [master]
+        branches: [main, alpha, beta]
+
+permissions:
+    contents: read
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 
 jobs:
     test:
-        runs-on: ${{ matrix.os }}
+        runs-on: ubuntu-latest
         strategy:
-            fail-fast: true
+            fail-fast: false
             matrix:
-                os: [ubuntu-latest, windows-latest]
-                php: [7.4, 8.0]
-                laravel: [8.*]
+                php: ['8.4']
+                laravel: ['^12.0', '^13.0']
                 stability: [prefer-lowest, prefer-stable]
                 include:
-                    - laravel: 8.*
-                      testbench: ^6.6
+                    - laravel: '^12.0'
+                      testbench: '^10.0'
+                    - laravel: '^13.0'
+                      testbench: '^11.0'
 
-        name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
+        name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }}
 
         steps:
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
             - name: Setup PHP
-              uses: shivammathur/setup-php@v2
+              uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
               with:
                   php-version: ${{ matrix.php }}
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
@@ -39,7 +47,10 @@ jobs:
                   echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
             - name: Install dependencies
               run: |
-                  composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-                  composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+                    composer update "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --with-all-dependencies --${{ matrix.stability }} --prefer-dist --no-interaction --no-scripts --no-plugins
+
+            - name: Audit dependencies
+              run: composer audit --locked --no-interaction
+
             - name: Execute tests
-              run: vendor/bin/phpunit
+              run: vendor/bin/pest

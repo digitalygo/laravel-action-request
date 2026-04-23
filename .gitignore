@@ -52,3 +52,4 @@ fabric.properties
 .idea/$CACHE_FILE$
 .idea/codestream.xml
 .idea/**/azureSettings.xml
+substrate/traces/status/

@@ -3,8 +3,8 @@ status: draft
 created_at: 2026-02-23
 rationale: Piano per estrarre il comando make:action-request in libreria Composer installabile, con flusso action-first, stubs pubblicabili e suite di test.
 supporting_docs:
-  - thoughts/shared/operations/2026-02-23-action-request-pattern.md
-  - thoughts/shared/operations/2026-02-23-contributing-workflow-summary.md
+  - substrate/traces/operations/2026-02-23-action-request-pattern.md
+  - substrate/traces/operations/2026-02-23-contributing-workflow-summary.md
 ---
 
 # Piano – Libreria Composer "Action Request"
@@ -43,8 +43,7 @@ supporting_docs:
      (namespace pacchetto).
    - Mantenere firma: `make:action-request {model} {name} {version=v1}`.
    - Estrarre percorsi/namespace in config con fallback agli attuali: Actions in
-     `app/Actions/{version}/{Model}`, Requests in
-     `app/Http/Requests/{version}/{Model}`, Tests in
+     `app/Actions/{version}/{Model}`, Requests in `app/Http/Requests/{version}/{Model}`, Tests in
      `tests/Feature/Http/Actions/{version}/{Model}`.
    - Mantenere `addRequest()` per sostituire `{{ requestClassWithNamespace }}`
      e `{{ requestClass }}` nello stub.
@@ -116,7 +115,7 @@ supporting_docs:
    dominio nel namespace dei test
    (`Tests\\Feature\\Actions\\{version}\\{model}` vs percorsi custom).
 5. **Generazione risorse** (opt-in): flag `--resource` per creare uno scheletro
-   di API Resource collegato all’Action (se presente `make:resource`).
+   di API Resource collegato all'Action (se presente `make:resource`).
 6. **Linting predefinito**: comando `action-request:lint` che esegue Pint sulle
    classi generate per garantire stile PSR-12 (opzionale per non rallentare il
    comando principale).
@@ -137,9 +136,9 @@ supporting_docs:
 - **Output atteso**: blocco OpenAPI in `openapi.yml` (o file modulare) con:
   - `paths`: entry `/api/{version}/{resource}` o `/api/{version}/{resource}/{id}`
     coerente con la rotta.
-  - Metodo HTTP tipico dell’Action (GET/POST/PUT/DELETE/PATCH).
+  - Metodo HTTP tipico dell'Action (GET/POST/PUT/DELETE/PATCH).
   - `operationId`: `{version}-{Model}-{Action}` (es. `v1-Post-Store`).
-  - `summary`/`description`: derivate dal nome dell’Action.
+  - `summary`/`description`: derivate dal nome dell'Action.
   - `requestBody`: schema che replica le regole della Form Request (tipi,
     required, enum, pattern, min/max), con esempi.
   - `responses`: almeno `200` (o `201` per create) con schema Resource o
@@ -174,7 +173,7 @@ supporting_docs:
 
 - Allineare requisiti di compatibilità (solo Laravel 12 o anche 11?).
 - Stabilire naming definitivo del pacchetto e licenza.
-- Procedere con l’implementazione in un nuovo repo Git seguendo il piano e
+- Procedere con l'implementazione in un nuovo repo Git seguendo il piano e
   aggiungendo la CI.
 
 ## Decisione su dipendenza lorisleiva/laravel-actions
@@ -187,7 +186,7 @@ supporting_docs:
 ### Nota su gestione dipendenza
 
 - `lorisleiva/laravel-actions` sarà in `require` del pacchetto (dipendenza
-  transitiva), non un requisito manuale dell’app host. Chi installa il pacchetto
+  transitiva), non un requisito manuale dell'app host. Chi installa il pacchetto
   non dovrà aggiungerla separatamente.
 
 ## Miglioramenti mirati per endpoint semplici e atomici
