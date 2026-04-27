@@ -35,7 +35,7 @@ jobs:
               uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
             - name: Setup PHP
-              uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+              uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f
               with:
                   php-version: ${{ matrix.php }}
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
